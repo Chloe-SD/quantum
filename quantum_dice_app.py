@@ -41,7 +41,7 @@ with col2:
 
 # Roll button
 if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
-    with st.spinner("Quantum circuits are calculating your roll..."):
+    with st.spinner("rolling..."):
         result = dice.roll_die(die_choice, luck)
     
     # Display the result with some styling
@@ -53,10 +53,6 @@ if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
         st.error("Critical fail! The quantum realm was not kind to you.")
     elif result == max_value:
         st.success("Critical success! The quantum particles aligned perfectly!")
-    elif result < max_value / 3:
-        st.warning("Not great. Maybe adjust your luck next time?")
-    elif result > max_value * 2/3:
-        st.info("Nice high roll! The quantum probabilities favored you.")
 
 # Visualization section
 st.divider()
@@ -98,8 +94,25 @@ st.divider()
 st.write("### How it works")
 st.write("""
 This simulator uses quantum computing principles to generate truly random dice rolls. 
+         
 When luck is set to 5, it uses pure quantum randomness through superposition.
+ """)
+c = st.container(border=True)
+c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an equal superposition of both.")    
+c.image("images/hgateMatrix.png", width=500)
+c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
+
+st.write("""    
 Other luck values introduce a controlled bias while still using quantum randomness as the base.
+         
+The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
+face of the die would have an equal probabilito of being rolled (a weight of 1), the bias shifts the weights
+to favor certain faces.
+         
+         unbiased d6 wights=[1,1,1,1,1,1]
+         with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
 """)
+
+
 
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
