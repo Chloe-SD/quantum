@@ -60,7 +60,7 @@ st.subheader("Visualize Luck Effects")
 st.write("See how different luck values affect the probability distribution")
 
 vis_die = st.selectbox("Die to visualize:", list(dice.dice_types.keys()), key="vis_die")
-num_rolls = st.slider("Number of simulated rolls:", 100, 2000, 1000, 100)
+num_rolls = st.slider("Number of simulated rolls:", 100, 500, 300, 50)
 
 if st.button("Generate Visualization", use_container_width=True):
     with st.spinner("Running quantum simulations..."):
@@ -102,17 +102,28 @@ c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an
 c.image("images/hgateMatrix.png", width=500)
 c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
 
+c.write("The qubit is then measured to collapse the superposition into a single classical bit (0 or 1).")
+
+
 st.write("""    
 Other luck values introduce a controlled bias while still using quantum randomness as the base.
          
 The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
-face of the die would have an equal probabilito of being rolled (a weight of 1), the bias shifts the weights
+face of the die would have an equal probability of being rolled (a weight of 1), the bias shifts the weights
 to favor certain faces.
          
          unbiased d6 wights=[1,1,1,1,1,1]
          with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
 """)
 
+st.write("In a quantum environment, we would normally use a rotation gate to apply this bias, allowing us to adjust the superposition of states.")
 
+c2 = st.container(border=True)
+c2.write("A visual representation of a rotation gate applied to a qubit. We can see that applying a rotation to any axis of the qubit will influence the outcome in a biased direction.")
+c2.image("images/rotationExample.png", width=500)   
+c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
+
+st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
 
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
+st.write("Created by Chloe Nibali")
