@@ -126,4 +126,3 @@ c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate
 st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
 
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
-st.write("Created by Chloe Nibali")
