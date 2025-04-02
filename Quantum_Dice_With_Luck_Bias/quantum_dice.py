@@ -1,5 +1,5 @@
 from qiskit import QuantumCircuit
-from qiskit.primitives import StateVectorSampler
+from qiskit.primitives import StatevectorSampler
 import matplotlib.pyplot as plt
 import numpy as np
 import time
@@ -9,7 +9,7 @@ class QuantumDice:
         """Initialize the quantum dice simulator"""
         # These will be the types of dice we can roll
         # Standard tabletop dice, with a d100 added in for fun
-        self.sampler = StateVectorSampler()
+        self.sampler = StatevectorSampler()
         self.dice_types = {
             "d4": 4,
             "d6": 6,
