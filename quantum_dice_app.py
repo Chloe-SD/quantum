@@ -1,6 +1,8 @@
+#to run: streamlit run quantum_dice_app.py
+
 import streamlit as st
-from qiskit import QuantumCircuit
-from qiskit.primitives import Sampler
+#from qiskit import QuantumCircuit
+#from qiskit.primitives import Sampler
 import matplotlib.pyplot as plt
 import numpy as np
 import time
@@ -126,3 +128,4 @@ c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate
 st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
 
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
+
