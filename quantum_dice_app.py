@@ -39,14 +39,14 @@ dice = get_dice()
 
 # Create two columns for the controls
 col1, col2 = st.columns(2)
-with col2:
+with col1:
     die_choice = st.selectbox("Choose a die:", list(dice.dice_types.keys()), index=5)
 
     luck = st.slider("Set your luck level (5 is neutral):", 
         min_value=1, max_value=10, value=5,
         help="Lower values bias toward lower numbers, higher values bias toward higher numbers")
     
-with col1:
+with col2:
     st.image(dice_images[die_choice], width=150)
 
 # Roll button
@@ -73,13 +73,13 @@ st.subheader("Visualize Luck Effects")
 st.write("See how different luck values affect the probability distribution")
 
 visCol1, visCol2 = st.columns(2)
-with visCol2:
+with visCol1:
     vis_die = st.selectbox("Die to visualize:", list(dice.dice_types.keys()), key="vis_die", index=3)
     c3 = st.container(border=True)
     c3.write("This simulation takes some time, please be patient!")
     c3.write("More rolls == better visualization!")
     
-with visCol1:
+with visCol2:
     st.image(dice_images[vis_die], width=150, caption=f"{vis_die}")
     
 
@@ -112,41 +112,69 @@ if st.button("Generate Visualization", use_container_width=True):
         
         st.info("Notice how higher luck values shift the probability toward higher numbers!")
 
-# Add some information
+#===========================================================================================================
+# About section
 st.divider()
-st.write("### How it works")
-st.write("""
-This simulator uses quantum computing principles to generate truly random dice rolls. 
-         
-When luck is set to 5, it uses pure quantum randomness through superposition.
- """)
-c = st.container(border=True)
-c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an equal superposition of both.")    
-c.image("images/hgateMatrix.png", width=500)
-c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
+st.subheader("About this Simulator")
+tab1, tab2, tab3 = st.tabs(["How it Works", "Emerging Trends", "Impact & Ethics"])
 
-c.write("The qubit is then measured to collapse the superposition into a single classical bit (0 or 1).")
+with tab1:
+    st.write("### How it works")
+    st.write("""
+    This simulator uses quantum computing principles to generate truly random dice rolls. 
+            
+    When luck is set to 5, it uses pure quantum randomness through superposition.
+    """)
+    c = st.container(border=True)
+    c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an equal superposition of both.")    
+    c.image("images/hgateMatrix.png", width=500)
+    c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
+
+    c.write("The qubit is then measured to collapse the superposition into a single classical bit (0 or 1).")
 
 
-st.write("""    
-Other luck values introduce a controlled bias while still using quantum randomness as the base.
-         
-The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
-face of the die would have an equal probability of being rolled (a weight of 1), the bias shifts the weights
-to favor certain faces.
-         
-         unbiased d6 wights=[1,1,1,1,1,1]
-         with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
-""")
+    st.write("""    
+    Other luck values introduce a controlled bias while still using quantum randomness as the base.
+            
+    The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
+    face of the die would have an equal probability of being rolled (a weight of 1), the bias shifts the weights
+    to favor certain faces.
+    """)
+    c4 = st.container(border=True)
+    c4.write("unbiased d6 wights=[1,1,1,1,1,1]")
+    c4.write("with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]")
 
-st.write("In a quantum environment, we would normally use a rotation gate to apply this bias, allowing us to adjust the superposition of states.")
+    st.write("In a quantum environment, we would normally use a rotation gate to apply this bias, allowing us to adjust the superposition of states.")
 
-c2 = st.container(border=True)
-c2.write("A visual representation of a rotation gate applied to a qubit. We can see that applying a rotation to any axis of the qubit will influence the outcome in a biased direction.")
-c2.image("images/rotationExample.png", width=500)   
-c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
+    c2 = st.container(border=True)
+    c2.write("A visual representation of a rotation gate applied to a qubit. We can see that applying a rotation to any axis of the qubit will influence the outcome in a biased direction.")
+    c2.image("images/rotationExample.png", width=500)   
+    c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
 
-st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
+    st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
 
+with tab2:
+    st.write("### Emerging Trends")
+    st.write("""
+    Quantum computing is a rapidly evolving field, and its applications in gaming and simulation are gaining traction.
+    
+    As quantum hardware becomes more accessible, we can expect to see more sophisticated simulations that leverage quantum entanglement and superposition for even more complex scenarios.
+    
+    The integration of quantum computing into gaming could lead to new genres of games that rely on true randomness and complex probability distributions.
+    """)
+
+with tab3:
+    st.write("### Impact & Ethics")
+    st.write("""
+    As with any technology, the use of quantum computing in gaming raises ethical considerations. 
+    
+    The potential for true randomness could lead to concerns about fairness and transparency in games that rely on chance.
+    
+    Additionally, the environmental impact of quantum computing hardware must be considered as the field continues to grow.
+    
+    It's essential for developers and players alike to engage in discussions about the implications of using quantum technology in gaming.
+    """)
+
+st.divider()
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
 
