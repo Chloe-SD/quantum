@@ -114,38 +114,64 @@ if st.button("Generate Visualization", use_container_width=True):
 
 # Add some information
 st.divider()
-st.write("### How it works")
-st.write("""
-This simulator uses quantum computing principles to generate truly random dice rolls. 
-         
-When luck is set to 5, it uses pure quantum randomness through superposition.
- """)
-c = st.container(border=True)
-c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an equal superposition of both.")    
-c.image("images/hgateMatrix.png", width=500)
-c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
+st.subheader("About the Simulator")
+t1, t2, t3 = st.tabs(["How it works", "Emerging Trends", "Inpact & Ethics"])
 
-c.write("The qubit is then measured to collapse the superposition into a single classical bit (0 or 1).")
+with t1:
+    st.write("### How it works")
+    st.write("""
+    This simulator uses quantum computing principles to generate truly random dice rolls. 
+            
+    When luck is set to 5, it uses pure quantum randomness through superposition.
+    """)
+    c = st.container(border=True)
+    c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an equal superposition of both.")    
+    c.image("images/hgateMatrix.png", width=500)
+    c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
+
+    c.write("The qubit is then measured to collapse the superposition into a single classical bit (0 or 1).")
 
 
-st.write("""    
-Other luck values introduce a controlled bias while still using quantum randomness as the base.
-         
-The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
-face of the die would have an equal probability of being rolled (a weight of 1), the bias shifts the weights
-to favor certain faces.
-         
-         unbiased d6 wights=[1,1,1,1,1,1]
-         with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
-""")
+    st.write("""    
+    Other luck values introduce a controlled bias while still using quantum randomness as the base.
+            
+    The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
+    face of the die would have an equal probability of being rolled (a weight of 1), the bias shifts the weights
+    to favor certain faces.
+            
+            unbiased d6 wights=[1,1,1,1,1,1]
+            with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
+    """)
 
-st.write("In a quantum environment, we would normally use a rotation gate to apply this bias, allowing us to adjust the superposition of states.")
+    st.write("In a quantum environment, we would normally use a rotation gate to apply this bias, allowing us to adjust the superposition of states.")
 
-c2 = st.container(border=True)
-c2.write("A visual representation of a rotation gate applied to a qubit. We can see that applying a rotation to any axis of the qubit will influence the outcome in a biased direction.")
-c2.image("images/rotationExample.png", width=500)   
-c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
+    c2 = st.container(border=True)
+    c2.write("A visual representation of a rotation gate applied to a qubit. We can see that applying a rotation to any axis of the qubit will influence the outcome in a biased direction.")
+    c2.image("images/rotationExample.png", width=500)   
+    c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
 
-st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
+    st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
 
+with t2:
+    st.write("### Emerging Trends")
+    st.write("""
+    Quantum computing is an emerging field with the potential to revolutionize many industries, including gaming and gambling.
+            
+    As quantum technology advances, we may see more applications of quantum randomness in gaming, leading to fairer and more unpredictable outcomes.
+            
+    The use of quantum randomness in games could also lead to new game mechanics and experiences that are not possible with classical randomness.
+    """)
+
+
+with t3:
+    st.write("### Impact & Ethics")
+    st.write("""
+    The use of quantum randomness in gaming raises ethical questions about fairness and transparency.
+            
+    As quantum technology becomes more accessible, it will be important to ensure that games using quantum randomness are fair and transparent.
+            
+    Additionally, the use of quantum randomness in gambling could lead to new forms of addiction and exploitation.
+    """)
+
+st.divider()
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
