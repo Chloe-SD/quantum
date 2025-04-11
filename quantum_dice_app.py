@@ -1,11 +1,8 @@
 #to run: streamlit run quantum_dice_app.py
 
 import streamlit as st
-#from qiskit import QuantumCircuit
-#from qiskit.primitives import Sampler
 import matplotlib.pyplot as plt
-import numpy as np
-import time
+
 
 
 from Quantum_Dice_With_Luck_Bias.quantum_dice import QuantumDice
@@ -18,6 +15,16 @@ st.set_page_config(
     page_icon="🎲",
     layout="centered"
 )
+
+dice_images = {
+    "d4": "images/d4.png",
+    "d6": "images/d6.png",
+    "d8": "images/d8.png",
+    "d10": "images/d10.png",
+    "d12": "images/d12.png",
+    "d20": "images/d20.png",
+    "d100": "images/d100.png"
+}
 
 # Main app
 st.title("🎲 Quantum Dice Simulator ⚛️")
@@ -32,14 +39,15 @@ dice = get_dice()
 
 # Create two columns for the controls
 col1, col2 = st.columns(2)
-
-with col1:
-    die_choice = st.selectbox("Choose a die type:", list(dice.dice_types.keys()))
-
 with col2:
+    die_choice = st.selectbox("Choose a die:", list(dice.dice_types.keys()), index=5)
+
     luck = st.slider("Set your luck level (5 is neutral):", 
-                     min_value=1, max_value=10, value=5,
-                     help="Lower values bias toward lower numbers, higher values bias toward higher numbers")
+        min_value=1, max_value=10, value=5,
+        help="Lower values bias toward lower numbers, higher values bias toward higher numbers")
+    
+with col1:
+    st.image(dice_images[die_choice], width=150)
 
 # Roll button
 if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
@@ -56,13 +64,26 @@ if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
     elif result == max_value:
         st.success("Critical success! The quantum particles aligned perfectly!")
 
+
+#==========================================================================================================
+
 # Visualization section
 st.divider()
 st.subheader("Visualize Luck Effects")
 st.write("See how different luck values affect the probability distribution")
 
-vis_die = st.selectbox("Die to visualize:", list(dice.dice_types.keys()), key="vis_die")
-num_rolls = st.slider("Number of simulated rolls:", 100, 500, 300, 50)
+visCol1, visCol2 = st.columns(2)
+with visCol2:
+    vis_die = st.selectbox("Die to visualize:", list(dice.dice_types.keys()), key="vis_die", index=3)
+    c3 = st.container(border=True)
+    c3.write("This simulation takes some time, please be patient!")
+    c3.write("More rolls == better visualization!")
+    
+with visCol1:
+    st.image(dice_images[vis_die], width=150, caption=f"{vis_die}")
+    
+
+num_rolls = st.slider("Number of simulated rolls:", 100, 1000, 700, 100)
 
 if st.button("Generate Visualization", use_container_width=True):
     with st.spinner("Running quantum simulations..."):
@@ -78,11 +99,11 @@ if st.button("Generate Visualization", use_container_width=True):
             
             # Create histogram
             ax.hist(results, bins=range(1, die_size + 2), alpha=0.6, 
-                   label=f"Luck = {luck}", density=True)
+                   label=f"Luck = {luck}")
         
         ax.set_title(f"Effect of Luck on {vis_die} Rolls ({num_rolls} rolls per luck value)")
         ax.set_xlabel("Roll Result")
-        ax.set_ylabel("Probability")
+        ax.set_ylabel("NUmber of hits")
         ax.set_xticks(range(1, die_size + 1))
         ax.legend()
         ax.grid(alpha=0.3)
