@@ -17,7 +17,7 @@ class QuantumDice:
             "d10": 10,
             "d12": 12,
             "d20": 20,
-            "d100": 100
+            #"d100": 100
         }
     
     def _calculate_bias(self, luck, die_size):
@@ -156,11 +156,11 @@ class QuantumDice:
             
             # Create histogram
             plt.hist(results, bins=range(1, die_size + 2), alpha=0.6, 
-                     label=f"Luck = {luck}", density=True)
+                     label=f"Luck = {luck}")
         
         plt.title(f"Effect of Luck on {die_type} Rolls ({num_rolls} rolls per luck value)")
         plt.xlabel("Roll Result")
-        plt.ylabel("Probability")
+        plt.ylabel("Number of hits")
         plt.xticks(range(1, die_size + 1))
         plt.legend()
         plt.grid(alpha=0.3)
