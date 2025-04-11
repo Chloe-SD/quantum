@@ -17,7 +17,7 @@ class QuantumDice:
             "d10": 10,
             "d12": 12,
             "d20": 20,
-            #"d100": 100
+            "d100": 100
         }
     
     def _calculate_bias(self, luck, die_size):
