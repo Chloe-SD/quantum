@@ -16,6 +16,13 @@ st.set_page_config(
     layout="centered"
 )
 
+hide_github_icon = """
+#GithubIcon {
+  visibility: hidden;
+}
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
 dice_images = {
     "d4": "images/d4.png",
     "d6": "images/d6.png",
@@ -196,8 +203,23 @@ with t2:
     tool can help developers to be more efficient and creative. Though it is important to note that developers should be able to read and understand any code or content 
     that ends up in their projects, as AI can produce incorrect or misleading information.
     """)
-
+    st.markdown("Interactive Data Visualization")
+    st.write("""
+    The project employs dynamic visualization techniques to make quantum concepts accessible and intuitive. Real-time visualization of probability distributions 
+    helps bridge the gap between complex quantum theory and practical understanding.
+    """)
+    
     st.write("### Non-Technical Emerging Trends")
+    st.markdown("- Gamification of Scientific Concepts")
+    st.write("""
+    By transforming abstract quantum principles into an interactive dice-rolling application with luck modifiers, this project exemplifies the trend of using 
+    game mechanics to increase engagement with complex scientific ideas.
+    """)
+    st.markdown("- Open Source Scientific Tools")
+    st.write("""
+    The project builds upon open-source quantum computing frameworks like Qiskit, reflecting the broader trend toward collaborative, 
+    community-driven development of scientific tools and resources.
+    """)
 
 #=================================================================================================
 # ==============================IMPACT & ETHICS=====================================================
