@@ -16,6 +16,61 @@ st.set_page_config(
     layout="centered"
 )
 
+
+app_style = """
+<style>
+    /* Make buttons more attractive */
+    .stButton button {
+        background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+        color: white;
+        border: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .stButton button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    
+    /* Tab styling - enhanced */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background-color: #1c9404;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: #007fff;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0,123,255,0.2);
+    }
+    
+    /* Divider styling - enhanced */
+    hr {
+        height: 3px !important;  /* Make the divider bolder */
+        background: #1c9404 !important;  /* Neon green color */
+        border: none !important;
+        margin: 1.5rem 0 !important;
+        box-shadow: 0 0 8px #39FF14 !important;  /* Add a neon glow effect */
+    }
+    
+</style>
+"""
+st.markdown(app_style, unsafe_allow_html=True)
+
 dice_images = {
     "d4": "images/d4.png",
     "d6": "images/d6.png",
@@ -30,7 +85,7 @@ dice_images = {
 st.title("🎲 Quantum Dice Simulator ⚛️")
 st.write("Roll dice using real quantum mechanics with luck modifiers!")
 st.divider()
-st.divider()
+
 #=================================================================================================
 # ================================ROLL SECTION====================================================
 #=================================================================================================
@@ -73,7 +128,7 @@ if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
 #=================================================================================================
 # ==========================Visualization Section=================================================
 #=================================================================================================
-st.divider()
+
 st.divider()
 st.subheader("📉 Visualize Luck Effects 📈")
 st.write("See how different luck values affect the probability distribution")
@@ -121,30 +176,30 @@ if st.button("Generate Visualization", use_container_width=True):
 #=================================================================================================
 # ==============================ABOUT SECTION=====================================================
 #=================================================================================================
-st.divider()
+
 st.divider()
 st.markdown("## ⚛️ About the Simulator ⚛️")
 st.markdown("**Explore these tabs to learn more:**")
 
 # Add custom CSS to make tabs more prominent
-tab_style = """
-<style>
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: #1c9404;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-weight: bold;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #007fff;
-        color: white;
-    }
-</style>
-"""
-st.markdown(tab_style, unsafe_allow_html=True)
+# tab_style = """
+# <style>
+#     .stTabs [data-baseweb="tab-list"] {
+#         gap: 10px;
+#     }
+#     .stTabs [data-baseweb="tab"] {
+#         background-color: #1c9404;
+#         border-radius: 5px;
+#         padding: 10px 20px;
+#         font-weight: bold;
+#     }
+#     .stTabs [aria-selected="true"] {
+#         background-color: #007fff;
+#         color: white;
+#     }
+# </style>
+#"""
+st.markdown(app_style, unsafe_allow_html=True)
 t1, t2, t3 = st.tabs(["🔍 How it works", "🚀 Emerging Trends", "💡 Impact & Ethics"])
 
 with t1:
