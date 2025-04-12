@@ -29,7 +29,12 @@ dice_images = {
 # Main app
 st.title("🎲 Quantum Dice Simulator ⚛️")
 st.write("Roll dice using real quantum mechanics with luck modifiers!")
+st.divider()
 
+#=================================================================================================
+# ================================ROLL SECTION====================================================
+#=================================================================================================
+st.subheader("🤞 Try your luck! 🎲")
 # Initialize the dice simulator
 @st.cache_resource
 def get_dice():
@@ -65,11 +70,12 @@ if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
         st.success("Critical success! The quantum particles aligned perfectly!")
 
 
-#==========================================================================================================
+#=================================================================================================
+# ==========================Visualization Section=================================================
+#=================================================================================================
 
-# Visualization section
 st.divider()
-st.subheader("Visualize Luck Effects")
+st.subheader("📉 Visualize Luck Effects 📈")
 st.write("See how different luck values affect the probability distribution")
 
 visCol1, visCol2 = st.columns(2)
@@ -112,10 +118,12 @@ if st.button("Generate Visualization", use_container_width=True):
         
         st.info("Notice how higher luck values shift the probability toward higher numbers!")
 
-# Add some information
+#=================================================================================================
+# ==============================ABOUT SECTION=====================================================
+#=================================================================================================
 st.divider()
-st.subheader("About the Simulator")
-t1, t2, t3 = st.tabs(["How it works", "Emerging Trends", "Inpact & Ethics"])
+st.subheader("⚛️ About the Simulator ⚛️")
+t1, t2, t3 = st.tabs(["How it works", "Emerging Trends", "Impact & Ethics"])
 
 with t1:
     st.write("### How it works")
@@ -150,27 +158,59 @@ with t1:
     c2.image("images/rotationExample.png", width=500)   
     c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
 
-    st.write("However, for simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
+    st.write("For simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
+
+    st.write("### How is this different from classical random number generators?")
+    st.write(" - Classical RNGs (Random Number Generators) are actually 'pseudo-random' in that they:")
+    st.markdown(" - Use mathematical algorithms to generate numbers that appear random")
+    st.markdown(" - Are determined by a 'seed' value, meaning the same input will always produce the same output")
+    st.markdown(" - Can be predicted by skilled attackers who could guess future seed values")
+
+    st.write("Quantum RNGs, on the other hand, use the inherent randomness of quantum mechanics to produce truly random and unpredictable numbers.")
+
+    st.write("### How are you running quantum circuits on a normal computer?")
+    st.write("The short answer is: I'm not!")
+    st.write("The hardware of a quantum computer is very different from a classical computer, and would play a large role in the randomness of the circuit.")
+    st.write("This app uses a quantum simulator, which is a classical computer that mimics the behavior of a quantum computer, using mathematical models to simulate quantum circuits.")
+    st.write("This allows us to run quantum algorithms and circuits on a classical computer, but with some limitations.")
+    st.write("""
+             The results are not truly random, as its very difficult to get randomness from a classical computer, but they are still more random than a classical RNG. However this comes 
+             at the cost of speed and complexity, as simulating quantum circuits on a classical computer is computationally expensive.
+             """)
+
+#=================================================================================================
+# ==============================EMERGING TRENDS=====================================================
+# =================================================================================================         
 
 with t2:
-    st.write("### Emerging Trends")
+    st.write("### Technical Emerging Trends")
+    st.markdown("- Quantum Computing Simulations")
     st.write("""
-    Quantum computing is an emerging field with the potential to revolutionize many industries, including gaming and gambling.
-            
-    As quantum technology advances, we may see more applications of quantum randomness in gaming, leading to fairer and more unpredictable outcomes.
-            
-    The use of quantum randomness in games could also lead to new game mechanics and experiences that are not possible with classical randomness.
+    Quantum computing is an emerging field with the potential to revolutionize many industries, including gaming.     
+    Projects like this allow developers to experiment with quantum concepts and algorithms in a more accessible way. This serves as a stepping stone for 
+    future education and development in quantum computing.
+    """)
+    st.markdown("- AI-Assisted Development")
+    st.write("""
+    The development process for this project incorporated the assistance of AI, for help with ideas, code snippets, debugging, and optimization! Using AI as a collaborative
+    tool can help developers to be more efficient and creative. Though it is important to note that developers should be able to read and understand any code or content 
+    that ends up in their projects, as AI can produce incorrect or misleading information.
     """)
 
+    st.write("### Non-Technical Emerging Trends")
+
+#=================================================================================================
+# ==============================IMPACT & ETHICS=====================================================
+# =================================================================================================
 
 with t3:
     st.write("### Impact & Ethics")
     st.write("""
-    The use of quantum randomness in gaming raises ethical questions about fairness and transparency.
-            
-    As quantum technology becomes more accessible, it will be important to ensure that games using quantum randomness are fair and transparent.
-            
-    Additionally, the use of quantum randomness in gambling could lead to new forms of addiction and exploitation.
+    By introducing quantum concepts through familiar actions that we can all tangibly understand, like rolling dice,
+    we can demystify the science in a fun a relatable way. 
+             
+    Tis simulation demonstrates how quantum phenomena can be harnessed for practical everyday applications, and understanding 
+    these concepts will become necessary for future workforce preperation in many fields 
     """)
 
 st.divider()
