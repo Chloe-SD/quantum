@@ -16,13 +16,6 @@ st.set_page_config(
     layout="centered"
 )
 
-hide_github_icon = """
-#GithubIcon {
-  visibility: hidden;
-}
-"""
-st.markdown(hide_github_icon, unsafe_allow_html=True)
-
 dice_images = {
     "d4": "images/d4.png",
     "d6": "images/d6.png",
@@ -37,7 +30,7 @@ dice_images = {
 st.title("🎲 Quantum Dice Simulator ⚛️")
 st.write("Roll dice using real quantum mechanics with luck modifiers!")
 st.divider()
-
+st.divider()
 #=================================================================================================
 # ================================ROLL SECTION====================================================
 #=================================================================================================
@@ -50,7 +43,7 @@ def get_dice():
 dice = get_dice()
 
 # Create two columns for the controls
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1, 2])
 with col2:
     die_choice = st.selectbox("Choose a die:", list(dice.dice_types.keys()), index=5)
 
@@ -80,12 +73,12 @@ if st.button("🎲 Roll the Quantum Dice 🎲", use_container_width=True):
 #=================================================================================================
 # ==========================Visualization Section=================================================
 #=================================================================================================
-
+st.divider()
 st.divider()
 st.subheader("📉 Visualize Luck Effects 📈")
 st.write("See how different luck values affect the probability distribution")
 
-visCol1, visCol2 = st.columns(2)
+visCol1, visCol2 = st.columns([1, 2])
 with visCol2:
     vis_die = st.selectbox("Die to visualize:", list(dice.dice_types.keys()), key="vis_die", index=3)
     c3 = st.container(border=True)
@@ -129,111 +122,228 @@ if st.button("Generate Visualization", use_container_width=True):
 # ==============================ABOUT SECTION=====================================================
 #=================================================================================================
 st.divider()
-st.subheader("⚛️ About the Simulator ⚛️")
-t1, t2, t3 = st.tabs(["How it works", "Emerging Trends", "Impact & Ethics"])
+st.divider()
+st.markdown("## ⚛️ About the Simulator ⚛️")
+st.markdown("**Explore these tabs to learn more:**")
+
+# Add custom CSS to make tabs more prominent
+tab_style = """
+<style>
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: #1c9404;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #007fff;
+        color: white;
+    }
+</style>
+"""
+st.markdown(tab_style, unsafe_allow_html=True)
+t1, t2, t3 = st.tabs(["🔍 How it works", "🚀 Emerging Trends", "💡 Impact & Ethics"])
 
 with t1:
-    st.write("### How it works")
+    st.write("### 🎲 How it works")
+    
+    # Introduction
     st.write("""
-    This simulator uses quantum computing principles to generate truly random dice rolls. 
-            
-    When luck is set to 5, it uses pure quantum randomness through superposition.
+    This simulator uses quantum computing principles to generate truly random dice rolls. The randomness comes
+    from quantum superposition, with luck modifiers introducing controlled bias.
     """)
-    c = st.container(border=True)
-    c.write("A Hadamard gate is applied to a qubit to turn a state of 0 or 1 into an equal superposition of both.")    
-    c.image("images/hgateMatrix.png", width=500)
-    c.markdown("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
-
-    c.write("The qubit is then measured to collapse the superposition into a single classical bit (0 or 1).")
-
-
-    st.write("""    
-    Other luck values introduce a controlled bias while still using quantum randomness as the base.
-            
-    The bias (the luck slider) is applied via weights to the quantum probability distribution, Whereas each
-    face of the die would have an equal probability of being rolled (a weight of 1), the bias shifts the weights
-    to favor certain faces.
-            
-            unbiased d6 wights=[1,1,1,1,1,1]
-            with luck 8=[0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
+    
+    # Quantum Randomness Section
+    st.subheader("⚛️ Quantum Randomness")
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.write("""
+        When luck is set to 5 (neutral), the simulator uses pure quantum randomness:
+        - A Hadamard gate creates an equal superposition of 0 and 1 states
+        - Measuring the qubit collapses this superposition into a classical bit
+        - This process creates true randomness unlike classical random generators
+        """)
+    
+    with col2:
+        st.image("images/hgateMatrix.png", width=200, caption="Hadamard Gate Matrix")
+        st.caption("[Source: IBM Quantum Documentation](https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.HGate)")
+    
+    # Add a fun fact
+    st.success("""
+    **Fun Fact:** The measurement problem in quantum mechanics suggests that particles exist in multiple states 
+    simultaneously (superposition) until they're observed. This is both the source of quantum randomness and 
+    the inspiration for Schrödinger's famous cat thought experiment! 🐱
     """)
 
-    st.write("In a quantum environment, we would normally use a rotation gate to apply this bias, allowing us to adjust the superposition of states.")
-
-    c2 = st.container(border=True)
-    c2.write("A visual representation of a rotation gate applied to a qubit. We can see that applying a rotation to any axis of the qubit will influence the outcome in a biased direction.")
-    c2.image("images/rotationExample.png", width=500)   
-    c2.markdown("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/shows-measurement-results-for-single-qubit-rotations-of-the-logical-input-state-H-ie_fig4_45913144")
-
-    st.write("For simplicity, we use a classical method to apply the bias in this simulator. with adjusted weights applied to the probability distribution.")
-
-    st.write("### How is this different from classical random number generators?")
-    st.write(" - Classical RNGs (Random Number Generators) are actually 'pseudo-random' in that they:")
-    st.markdown(" - Use mathematical algorithms to generate numbers that appear random")
-    st.markdown(" - Are determined by a 'seed' value, meaning the same input will always produce the same output")
-    st.markdown(" - Can be predicted by skilled attackers who could guess future seed values")
-
-    st.write("Quantum RNGs, on the other hand, use the inherent randomness of quantum mechanics to produce truly random and unpredictable numbers.")
-
-    st.write("### How are you running quantum circuits on a normal computer?")
-    st.write("The short answer is: I'm not!")
-    st.write("The hardware of a quantum computer is very different from a classical computer, and would play a large role in the randomness of the circuit.")
-    st.write("This app uses a quantum simulator, which is a classical computer that mimics the behavior of a quantum computer, using mathematical models to simulate quantum circuits.")
-    st.write("This allows us to run quantum algorithms and circuits on a classical computer, but with some limitations.")
+    # Luck Bias Section
+    st.subheader("🍀 Luck Bias Mechanism")
+    
     st.write("""
-             The results are not truly random, as its very difficult to get randomness from a classical computer, but they are still more random than a classical RNG. However this comes 
-             at the cost of speed and complexity, as simulating quantum circuits on a classical computer is computationally expensive.
-             """)
+    Other luck values introduce a controlled bias while preserving quantum randomness:
+    - The luck slider adjusts weights in the probability distribution
+    - Higher luck values shift probability toward higher numbers
+    - Example for d6:
+    - Neutral luck (5): [1, 1, 1, 1, 1, 1]
+    - High luck (8): [0.7, 0.82, 0.94, 1.06, 1.18, 1.3]
+    """)
+        
+    st.image("images/rotationExample.png", width=350, caption="Qubit Rotation")
+    st.caption("[Source: Rainer Kaltenbaek - ResearchGate](https://www.researchgate.net/figure/)")
+    st.write("In a true quantum computer, rotation gates would apply this bias by adjusting the superposition states.")
+
+    # Comparison Section
+    st.subheader("🎯 Quantum vs Classical Randomness")
+    
+    col5, col6 = st.columns([1, 1])
+    
+    with col5:
+        st.markdown("#### 💻 Classical RNGs")
+        st.markdown("""
+        - Use mathematical algorithms
+        - Deterministic (same seed = same output)
+        - Predictable patterns
+        - Vulnerable to skilled attackers
+        """)
+    
+    with col6:
+        st.markdown("#### ⚛️ Quantum RNGs")
+        st.markdown("""
+        - Use inherent quantum uncertainty
+        - Truly random outcomes
+        - No predictable patterns
+        - Statistically superior randomness
+        """)
+    
+    # Implementation Note
+    st.info("""
+    **Note:** This app uses a quantum simulator (not actual quantum hardware) to mimic quantum behavior. 
+    While more random than classical methods, it still runs on classical hardware with some limitations in 
+    true randomness and performance.
+    """)
+    
+    
 
 #=================================================================================================
 # ==============================EMERGING TRENDS=====================================================
 # =================================================================================================         
 
 with t2:
-    st.write("### Technical Emerging Trends")
-    st.markdown("- Quantum Computing Simulations")
-    st.write("""
-    Quantum computing is an emerging field with the potential to revolutionize many industries, including gaming.     
-    Projects like this allow developers to experiment with quantum concepts and algorithms in a more accessible way. This serves as a stepping stone for 
-    future education and development in quantum computing.
-    """)
-    st.markdown("- AI-Assisted Development")
-    st.write("""
-    The development process for this project incorporated the assistance of AI, for help with ideas, code snippets, debugging, and optimization! Using AI as a collaborative
-    tool can help developers to be more efficient and creative. Though it is important to note that developers should be able to read and understand any code or content 
-    that ends up in their projects, as AI can produce incorrect or misleading information.
-    """)
-    st.markdown("Interactive Data Visualization")
-    st.write("""
-    The project employs dynamic visualization techniques to make quantum concepts accessible and intuitive. Real-time visualization of probability distributions 
-    helps bridge the gap between complex quantum theory and practical understanding.
-    """)
+    st.subheader("🤖 Technical Emerging Trends")
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Quantum Computing Simulations**")
+    with col2:
+        st.write("""
+        Quantum computing is an emerging field with the potential to revolutionize many industries, including gaming.     
+        Projects like this allow developers to experiment with quantum concepts and algorithms in a more accessible way. This serves as a stepping stone for 
+        future education and development in quantum computing.
+        """)
     
-    st.write("### Non-Technical Emerging Trends")
-    st.markdown("- Gamification of Scientific Concepts")
-    st.write("""
-    By transforming abstract quantum principles into an interactive dice-rolling application with luck modifiers, this project exemplifies the trend of using 
-    game mechanics to increase engagement with complex scientific ideas.
-    """)
-    st.markdown("- Open Source Scientific Tools")
-    st.write("""
-    The project builds upon open-source quantum computing frameworks like Qiskit, reflecting the broader trend toward collaborative, 
-    community-driven development of scientific tools and resources.
-    """)
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **AI-Assisted Development**")
+    with col2:
+        st.write("""
+        The development process for this project incorporated the assistance of AI, for help with ideas, code snippets, debugging, and optimization! Using AI as a collaborative
+        tool can help developers to be more efficient and creative. Though it is important to note that developers should be able to read and understand any code or content 
+        that ends up in their projects, as AI can produce incorrect or misleading information.
+        """)
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Interactive Data Visualization**")
+    with col2:
+        st.write("""
+        The project employs dynamic visualization techniques to make quantum concepts accessible and intuitive. Real-time visualization of probability distributions 
+        helps bridge the gap between complex quantum theory and practical understanding.
+        """)
+    
+    st.subheader("🧮 Non-Technical Emerging Trends")
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Gamification of Scientific Concepts**")
+    with col2:
+        st.write("""
+        By transforming abstract quantum principles into an interactive dice-rolling application with luck modifiers, this project exemplifies the trend of using 
+        game mechanics to increase engagement with complex scientific ideas.
+        """)
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Open Source Scientific Tools**")
+    with col2:
+        st.write("""
+        The project builds upon open-source quantum computing frameworks like Qiskit, reflecting the broader trend toward collaborative, 
+        community-driven development of scientific tools and resources.
+        """)
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Experiential Learning & Interactive Education**")
+    with col2:
+        st.write("""
+        With a growing shift from passive to active learning experiences, especially for complex scientific concepts. 
+        Interactive tools like this quantum dice simulator exemplify how abstract scientific principles can be experienced firsthand 
+        rather than just read about. This learning trend makes advanced concepts more accessible and understandable to broader audiences.
+        """)
 
 #=================================================================================================
 # ==============================IMPACT & ETHICS=====================================================
 # =================================================================================================
 
 with t3:
-    st.write("### Impact & Ethics")
+    # Societal Impact Section
+    st.subheader("🌍 Societal Impact")
     st.write("""
-    By introducing quantum concepts through familiar actions that we can all tangibly understand, like rolling dice,
-    we can demystify the science in a fun a relatable way. 
-             
-    Tis simulation demonstrates how quantum phenomena can be harnessed for practical everyday applications, and understanding 
-    these concepts will become necessary for future workforce preperation in many fields 
+    This quantum dice simulator contributes to scientific literacy by making quantum concepts tangible and interactive. 
+    By demystifying quantum mechanics through a familiar context like dice rolling, it helps bridge the considerable gap 
+    between quantum science and public understanding.
     """)
+    
+    st.write("""
+    The project demonstrates how quantum phenomena can be harnessed for practical applications like random number 
+    generation, potentially inspiring users to explore further applications of quantum computing. As quantum 
+    technologies continue to develop, tools that build fundamental understanding will be crucial for workforce 
+    preparation and public engagement with these emerging technologies.
+    """)
+
+    # Ethical Considerations Section
+    st.subheader("⚖️ Ethical Considerations")
+    
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Randomness in Sensitive Applications**")
+    with col2:
+        st.write("""
+        True quantum random number generators are increasingly used in applications like cryptography, 
+        gambling, and security systems. When developing tools that simulate quantum randomness, it's important 
+        to be transparent about their limitations compared to hardware-based quantum RNGs.
+        """)
+    
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Computational Resource Usage**")
+    with col2:
+        st.write("""
+        Quantum simulations can be computationally intensive. As these tools become more widespread, 
+        developers should consider the energy and resource implications of running complex simulations at scale.
+        """)
+    
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("- **Accessibility**")
+    with col2:
+        st.write("""
+        Interactive educational tools should strive to be accessible to users with different abilities and 
+        technical backgrounds. Ensuring that visualizations and interfaces accommodate diverse users helps 
+        prevent creating new barriers to scientific understanding.
+        """)
 
 st.divider()
 st.write("Made with ❤️ and ⚛️ (quantum physics)")
