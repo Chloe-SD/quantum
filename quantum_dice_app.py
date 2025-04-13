@@ -60,10 +60,10 @@ app_style = """
     
     /* Divider styling - enhanced */
     hr {
-        height: 3px !important;  /* Make the divider bolder */
+        height: 5px !important;  /* Make the divider bolder */
         background: #1c9404 !important;  /* Neon green color */
         border: none !important;
-        margin: 1.5rem 0 !important;
+        margin: 5rem 0 !important;
         box-shadow: 0 0 8px #39FF14 !important;  /* Add a neon glow effect */
     }
     
